@@ -2,17 +2,16 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.dao.CommentDAO;
 import com.example.javaspringblog.entity.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
-    @Autowired
-    CommentDAO commentDAO;
+    private final CommentDAO commentDAO;
 
     @Override
     public List<Comment> getAllByPostId(int postId) {

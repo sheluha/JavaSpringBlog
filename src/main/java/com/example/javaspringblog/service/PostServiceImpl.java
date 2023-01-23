@@ -3,16 +3,16 @@ package com.example.javaspringblog.service;
 import com.example.javaspringblog.dao.PostDAO;
 import com.example.javaspringblog.entity.Post;
 import com.example.javaspringblog.exception.NoSuchElementException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
 
-    @Autowired
-    PostDAO postDAO;
+    private final PostDAO postDAO;
 
     @Override
     public List<Post> getAllPosts() {

@@ -1,28 +1,20 @@
 package com.example.javaspringblog.controller;
 
-
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Base64;
-import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class AuthController {
-    @Autowired
-    UserService userService;
+
+    private final UserService userService;
 
     @PostMapping("/login")
     boolean getNamePassword(@RequestBody User user){
-        if(userService.findUser(user.getUserName(),user.getUserPassword())) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return userService.findUser(user.getUserName(), user.getUserPassword());
     }
     @PostMapping("/signup")
     boolean signUp(@RequestBody User user){

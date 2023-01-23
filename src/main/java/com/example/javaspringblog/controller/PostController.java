@@ -2,18 +2,18 @@ package com.example.javaspringblog.controller;
 
 import com.example.javaspringblog.entity.Post;
 import com.example.javaspringblog.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class PostController {
-    @Autowired
-    PostService postService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    private final PostService postService;
+
     @GetMapping("/posts")
     List<Post> showAllPosts(){
         return postService.getAllPosts();

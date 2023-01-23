@@ -2,16 +2,17 @@ package com.example.javaspringblog.controller;
 
 import com.example.javaspringblog.entity.Comment;
 import com.example.javaspringblog.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class CommentController {
-    @Autowired
-    CommentService commentService;
+
+    private final CommentService commentService;
 
     @GetMapping("/comments/{postId}")
     List<Comment> showAllComment(@PathVariable int postId){

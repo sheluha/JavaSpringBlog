@@ -3,15 +3,15 @@ package com.example.javaspringblog.service;
 import com.example.javaspringblog.dao.UserDAO;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.exception.NoSuchElementException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-    @Autowired
+
     UserDAO userDAO;
 
     @Override

@@ -2,20 +2,18 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.entity.User;
 
-import java.util.List;
 
 public interface UserService {
 
+    User saveUser(User user);
 
-    public User saveUser(User user);
+    boolean findUser(String userName, String password);
 
-    public boolean findUser(String userName, String password);
+    User findByName(String userName);
 
-    public User findByName(String userName);
+    User findById(int id);
 
-    public User findById(int id);
-
-    public void updateUserImageName(int id, String imageName);
+    void updateUserImageName(int id, String imageName);
 
 
 }
