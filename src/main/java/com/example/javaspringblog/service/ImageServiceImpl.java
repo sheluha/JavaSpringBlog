@@ -37,6 +37,7 @@ public class ImageServiceImpl implements ImageService{
     }
 
     private Path searchFile;
+    
     @Override
     public Resource loadAsResource(String filename) throws IOException{
         searchFile = null;
