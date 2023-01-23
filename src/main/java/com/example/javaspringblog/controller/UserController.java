@@ -26,8 +26,7 @@ public class UserController {
 
     @PostMapping("/upload")
     void uploadImage(@RequestParam("userId") int id, @RequestParam("file") MultipartFile file) throws IOException{
-        imageService.store(file);
-        userService.updateUserImageName(id, file.getOriginalFilename());
+        imageService.store(file,id);
 
     }
 

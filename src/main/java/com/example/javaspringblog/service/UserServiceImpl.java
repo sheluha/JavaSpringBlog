@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    UserDAO userDAO;
+    private final UserDAO userDAO;
 
     @Override
     public User saveUser(User user) {

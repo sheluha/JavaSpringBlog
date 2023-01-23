@@ -8,6 +8,6 @@ import java.io.IOException;
 
 @Service
 public interface ImageService {
-    void store(MultipartFile file) throws IOException;
+    void store(MultipartFile file, int id) throws IOException;
     Resource loadAsResource(String filename) throws IOException;
 }
