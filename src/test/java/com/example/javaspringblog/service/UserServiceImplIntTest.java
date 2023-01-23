@@ -5,22 +5,22 @@ import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.exception.NoSuchElementException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class UserServiceImplIntTest {
 
-    @Autowired
-    private UserService userService;
+    @InjectMocks
+    private UserServiceImpl userService;
 
-    @MockBean
+    @Mock
     private UserDAO userDAO;
 
-    private static User user = new User();
+    private static final User user = new User();
 
     @BeforeAll
     public static void setUp(){
