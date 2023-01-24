@@ -32,11 +32,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findById(int id) {
-        User user =  userDAO.findUserByUserId(id);
-        if(user != null){
-            return user;
-        }
-        throw new NoSuchElementException("No such user with id = " + id);
+        return userDAO.findUserByUserId(id).orElseThrow(()->
+                new NoSuchElementException("No such user with id = " + id));
     }
 
     @Override

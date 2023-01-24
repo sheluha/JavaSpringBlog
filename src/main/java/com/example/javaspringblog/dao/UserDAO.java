@@ -14,7 +14,7 @@ public interface UserDAO extends JpaRepository<User,Integer> {
 
     Optional<User> findUsersByUserName(String username);
 
-    User findUserByUserId(int id);
+    Optional<User> findUserByUserId(int id);
 
     @Transactional
     @Modifying

@@ -5,7 +5,6 @@ import com.example.javaspringblog.service.ImageService;
 import com.example.javaspringblog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

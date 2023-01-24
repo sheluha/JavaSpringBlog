@@ -2,8 +2,6 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.entity.User;
 
-import java.util.Optional;
-
 
 public interface UserService {
 

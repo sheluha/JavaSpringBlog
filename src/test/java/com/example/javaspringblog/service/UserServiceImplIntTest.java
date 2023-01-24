@@ -51,7 +51,7 @@ class UserServiceImplIntTest {
 
     @Test
     void findById() {
-        when(userDAO.findUserByUserId(user.getUserId())).thenReturn(user);
+        when(userDAO.findUserByUserId(user.getUserId())).thenReturn(Optional.of(user));
         assertNotNull(userService.findById(user.getUserId()));
 
         when(userDAO.findUserByUserId(user.getUserId())).thenThrow(NoSuchElementException.class);
