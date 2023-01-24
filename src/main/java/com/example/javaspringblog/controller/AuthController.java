@@ -3,6 +3,8 @@ package com.example.javaspringblog.controller;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,19 +14,17 @@ public class AuthController {
 
     private final UserService userService;
 
-    @PostMapping("/login")
-    boolean getNamePassword(@RequestBody User user){
-        return userService.findUser(user.getUserName(), user.getUserPassword());
-    }
+//    @PostMapping("/login")
+//    boolean getNamePassword(@RequestBody User user){
+//        return userService.findUser(user.getUserName(), user.getUserPassword());
+//    }
     @PostMapping("/signup")
-    boolean signUp(@RequestBody User user){
-        if(user.getUserName().length()>5 && user.getUserPassword().length()>5){
-            userService.saveUser(user);
-            return true;
-        }
-        else{
-            return false;
-        }
+    void signUp(@RequestBody User user){
+
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setUserPassword(encoder.encode(user.getUserPassword()));
+
+        userService.saveUser(user);
 
     }
 

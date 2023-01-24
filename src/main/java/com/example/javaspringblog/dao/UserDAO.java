@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface UserDAO extends JpaRepository<User,Integer> {
     boolean existsByUserNameAndUserPassword(String userName, String password);
 
-    User findUsersByUserName(String username);
+    Optional<User> findUsersByUserName(String username);
 
     User findUserByUserId(int id);
 

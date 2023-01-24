@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +42,7 @@ class UserServiceImplIntTest {
 
     @Test
     void findByName() {
-        when(userDAO.findUsersByUserName(user.getUserName())).thenReturn(user);
+        when(userDAO.findUsersByUserName(user.getUserName())).thenReturn(Optional.of(user));
         assertNotNull(userService.findByName("test"));
 
         when(userDAO.findUsersByUserName("")).thenThrow(NoSuchElementException.class);
