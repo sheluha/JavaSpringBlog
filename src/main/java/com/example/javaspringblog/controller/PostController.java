@@ -5,7 +5,6 @@ import com.example.javaspringblog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -15,10 +14,11 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    List<Post> showAllPosts(){
+    Iterable<Post> showAllPosts(){
         return postService.getAllPosts();
     }
 
+    //@AuthenticationPrincipal SecurityUser user
     @PostMapping("/newpost")
     void savePost(@RequestBody Post post){
         postService.savePost(post);

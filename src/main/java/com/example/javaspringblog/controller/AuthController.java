@@ -14,10 +14,6 @@ public class AuthController {
 
     private final UserService userService;
 
-//    @PostMapping("/login")
-//    boolean getNamePassword(@RequestBody User user){
-//        return userService.findUser(user.getUserName(), user.getUserPassword());
-//    }
     @PostMapping("/signup")
     void signUp(@RequestBody User user){
 

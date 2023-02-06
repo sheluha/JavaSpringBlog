@@ -1,26 +1,27 @@
 package com.example.javaspringblog.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 import lombok.Data;
 
-@Entity
+
 @Table(name = "users")
 @Data
 public class User {
     @Id
-    @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column("user_id")
     int userId;
 
-    @Column(name = "user_name")
+    @Column("user_name")
     String userName;
 
-    @Column(name = "user_password")
+    @Column("user_password")
     String userPassword;
 
-    @Column(name = "is_admin")
+    @Column("is_admin")
     Boolean isAdmin;
 
-    @Column(name = "image_name")
+    @Column("image_name")
     String imageName;
 }

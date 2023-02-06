@@ -1,26 +1,27 @@
 package com.example.javaspringblog.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 import lombok.Data;
 
-@Entity
-@Table(name = "comments")
+
+@Table("comments")
 @Data
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column("comment_id")
     int commentId;
 
-    @Column(name = "post_id")
+    @Column("post_id")
     int postId;
 
-    @Column(name = "user_id")
+    @Column("user_id")
     int userId;
 
-    @Column(name = "comment_body")
+    @Column("comment_body")
     String commentBody;
 
-    @Column(name = "user_name")
+    @Column("user_name")
     String userName;
 }

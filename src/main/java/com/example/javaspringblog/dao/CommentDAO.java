@@ -1,10 +1,12 @@
 package com.example.javaspringblog.dao;
 
 import com.example.javaspringblog.entity.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CommentDAO extends JpaRepository<Comment,Integer> {
+@Repository
+public interface CommentDAO extends CrudRepository<Comment,Integer> {
     List<Comment> getAllByPostId(int postId);
 }
