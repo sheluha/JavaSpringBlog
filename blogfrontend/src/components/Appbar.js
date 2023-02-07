@@ -16,35 +16,13 @@ export default function Appbar() {
 
   const[logButton,setLogButton] = useState(true);
   const[postButton,setPostButton] = useState(false);
-  const[userId,setuserId] = useState(0);
 
   useEffect(()=>{
-    if(localStorage.getItem('auth') != null){
+    if(localStorage.getItem('token') != null){
       setLogButton(false);
       setPostButton(true);
     }
   },[])
-
-  var configUserId = {
-    method: 'post',
-    url: 'http://localhost:8080/getId',
-    headers: { 'Authorization': localStorage.getItem('token') },
-    data: {
-        userId : 0,
-        userName : localStorage.getItem('name'),
-        userPassword : "",
-        isAdmin : false,
-        imageName : ""
-      }
-    
-  };
-  axios(configUserId)
-    .then(function (response) {
-        setuserId(response.data);
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -66,8 +44,8 @@ export default function Appbar() {
           <Link to='/login' style={{ color: '#FFF' }}>
             {logButton && <Button color="inherit" >Login</Button>}
           </Link>
-          {localStorage.getItem('auth')&&<Link to={'profile/'+userId}>
-          <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + userId} sx = {{border: '0.3px solid black'}}/>  
+          {localStorage.getItem('token')&&<Link to={'profile/'+localStorage.getItem('username')}>
+          <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + localStorage.getItem('username')} sx = {{border: '0.3px solid black'}}/>  
           </Link>}        
         </Toolbar>
       </AppBar>

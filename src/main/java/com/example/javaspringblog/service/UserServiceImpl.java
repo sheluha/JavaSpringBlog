@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService{
     public void saveUser(CreateUserRequest userRequest) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         userRequest.setUserPassword(encoder.encode(userRequest.getUserPassword()));
-
         User user = User.builder()
                 .userPassword(userRequest.getUserPassword())
                 .userName(userRequest.getUserName())

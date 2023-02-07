@@ -3,19 +3,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import red from '@mui/material/colors/red';
-import { Hidden } from '@mui/material';
-import { display } from '@mui/system';
+import { useEffect, useState } from 'react';
 
 
 const theme = createTheme();
@@ -24,10 +19,10 @@ export default function SignUp() {
 
   const[userName,setUserName] = useState('');
   const[password,setPassword] = useState('');
-  const[password2,setPassword2] = useState('');
-  const[psError,setPsError] = useState(true);
-  const[lengthError,setlengthError] = useState(true);
+  const[passwordConfirm,setPasswordConfirm] = useState('');
   const navigate = useNavigate();
+
+  let base64 = require('base-64');
 
 
 
@@ -35,6 +30,30 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
   };
+
+  function signIn() {
+      if(password==passwordConfirm){
+          let config = {
+              method: 'post',
+              url: 'http://localhost:8080/newuser',
+              data: {
+                userName : userName,
+                userPassword : password
+              }
+            };
+            axios(config)
+                .then(function (response) {
+                  if(response.status == 200){
+                    localStorage.setItem('token', 'Basic ' +  base64.encode(userName + ":" + password));
+                    localStorage.setItem('username',userName);
+                    navigate('/');
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+      }    
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,15 +73,9 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Typography component="h8" variant="h8" style={{color:"red"}} hidden={(psError)? 'hidden' : ''}  >
-            Пароли не совпадают
-          </Typography>
-          <Typography component="h8" variant="h8" style={{color:"red"}} hidden={(lengthError)? 'hidden' : ''}  >
-            Пароль и имя пользователя должны быть больше 5 символов
-          </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
-            color="secondary"
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -76,7 +89,7 @@ export default function SignUp() {
               }}
             />
             <TextField
-            color="secondary"
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -100,7 +113,7 @@ export default function SignUp() {
               id="password"
               autoComplete="current-password"
               onChange={(val)=>{
-                setPassword2(val.target.value);
+                setPasswordConfirm(val.target.value);
             }}
             />
             <Button
@@ -109,42 +122,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => {
-
-                if(password==password2){
-                    setPsError(true);
-                    let config2 = {
-                        method: 'post',
-                        url: 'http://localhost:8080/signup',
-                        data: {
-                          userId : 0,
-                          userName : userName,
-                          userPassword : password,
-                          isAdmin : false,
-                          imageName : ""
-                        }
-                      };
-                      axios(config2)
-                          .then(function (response) {
-                            if(response.data){
-                              localStorage.setItem('auth',true);
-                              localStorage.setItem('name',userName);
-                              localStorage.setItem('token','Basic dXNlcjpwYXNzd29yZA==');
-                              navigate('/');
-                            }
-                            else{
-                                setlengthError(false);
-                            }
-                          })
-                          .catch(function (error) {
-                          console.log(error);
-                          });
-                }
-                else{                 
-                    setPsError(false);
-                    
-                }     
-                }}
+              onClick={() => signIn}
             >
               Sign Up
             </Button>

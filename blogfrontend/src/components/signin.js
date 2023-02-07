@@ -17,11 +17,15 @@ import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
+
+
 export default function SignIn() {
 
   const[userName,setUserName] = useState('');
   const[password,setPassword] = useState('');
   const navigate = useNavigate();
+
+  let base64 = require('base-64');
 
 
 
@@ -29,6 +33,27 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
   };
+
+  function signIn() {
+    var token = 'Basic ' +  base64.encode(userName + ":" + password);
+
+    let config = {
+        method: 'post',
+        url: 'http://localhost:8080/signin',
+        headers: { 'Authorization': token },
+      };
+      axios(config)
+          .then(function (response) {
+            if(response.data){
+              localStorage.setItem('token', token);
+              localStorage.setItem('username',userName);
+              navigate('/');
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });  
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,31 +108,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => {
-                let config2 = {
-                  method: 'post',
-                  url: 'http://localhost:8080/login',
-                  data: {
-                    userId : 0,
-                    userName : userName,
-                    userPassword : password,
-                    isAdmin : false,
-                    imageName : ""
-                  }
-                };
-                axios(config2)
-                    .then(function (response) {
-                      if(response.data){
-                        localStorage.setItem('auth',true);
-                        localStorage.setItem('name',userName);
-                        localStorage.setItem('token','Basic dXNlcjpwYXNzd29yZA==');
-                        navigate('/');
-                      }
-                    })
-                    .catch(function (error) {
-                    console.log(error);
-                    });
-              }}
+              onClick={() => {signIn()}}
             >
               Sign In
             </Button>

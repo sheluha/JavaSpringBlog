@@ -17,95 +17,66 @@ import Divider from '@mui/material/Divider';
 import React from 'react';
 
 
-function useForceUpdate() {
-    let [value, setState] = useState(true);
-    return () => setState(!value);
-}
 
-const theme = createTheme({
-    typography: {
-      fontSize : 20,
-    },
-  });
 
 function Post() {
 
     const[post,setPost] = useState('');
-    const[value0,setValue0] = useState(0);
     const[comments,setComments] = useState([]);
     const[commentBody,setCommentBody] = useState('');
     const { id } = useParams();
-    const imgLink ="";
 
-    var config = {
+    let configPost = {
         method: 'get',
         url: 'http://localhost:8080/post/' + id,
       };
-
     useEffect(()=>{
-    axios(config)
+      axios(configPost)
         .then(function (response) {
             setPost(response.data);
         })
         .catch(function (error) {
-        console.log(error);
+          console.log(error);
         });
-
     },[]);
 
-    var configComment = {
+    let configComment = {
         method: 'get',
         url: 'http://localhost:8080/comments/' + id,
       };
-
-    // const fetchAll = React.useCallback(async() => {
-    //     axios(configComment)
-    //     .then(function (response) {
-    //         console.log(1);
-    //     setComments(response.data);
-    //     })
-    //     .catch(function (error) {
-    //     console.log(error);
-    //     });
-    // },[id]);
-
-
     useEffect(()=>{
-    axios(configComment)
+      axios(configComment)
         .then(function (response) {
-            console.log(value0);
-        setComments(response.data);
+          console.log('fetched comments');
+          setComments(response.data);
         })
         .catch(function (error) {
-        console.log(error);
+          console.log(error);
         });
 
     },[]);
 
-    const[userId,setuserId] = useState(0);
-
-    var configUserId = {
+    function newComment(){
+      let config = {
         method: 'post',
-        url: 'http://localhost:8080/getId',
+        url: 'http://localhost:8080/newcomment',
         headers: { 'Authorization': localStorage.getItem('token') },
         data: {
-            userId : 0,
-            userName : localStorage.getItem('name'),
-            userPassword : "",
-            isAdmin : false,
-            imageName : ""
-          }
-        
-      };
-      axios(configUserId)
+          postId : id,
+          commentBody : commentBody,
+        }
+      }
+    
+      axios(config)
         .then(function (response) {
-            setuserId(response.data);
+          console.log('fetched comments');
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
         });
-
-
+      setCommentBody('');
+      window.location.reload(false);
+    }
 
   return (
      <div className="Post">
@@ -140,31 +111,7 @@ function Post() {
                 <Button 
                 variant="contained" 
                 sx={{height:46}}
-                onClick={()=>{
-                    let config = {
-                        method: 'post',
-                        url: 'http://localhost:8080/comment',
-                        headers: { 'Authorization': localStorage.getItem('token') },
-                        data: {
-                          commentId : 0,
-                          postId : id,
-                          userId : userId,
-                          commentBody : commentBody,
-                          userName : localStorage.getItem('name')
-                        }
-                    }
-
-                    axios(config)
-                    .then(function (response) {
-                        
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                    setCommentBody('');
-                    window.location.reload(false);
-
-                }}>
+                onClick={()=>{newComment()}}>
                     Send
                 </Button>
             </Stack>
@@ -182,42 +129,11 @@ function Post() {
             <p style={{ textAlign: "left", fontSize: 16}}>
               {comment.commentBody}
             </p>
-            {/* <p style={{ textAlign: "left", color: "gray" }}>
-              posted 1 minute ago
-            </p> */}
           </Grid>
         </Grid>
         
       </Paper>
         ))}
-
-     
-      
-      
-      {/* <Paper style={{ padding: "40px 20px", marginTop: 10 }}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar alt="Remy Sharp" src={imgLink} />
-          </Grid>
-          <Grid justifyContent="left" item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-            <p style={{ textAlign: "left", fontSize: 10}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-              Suspendisse congue vulputate lobortis. Pellentesque at interdum
-              tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-              sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
-              metus, efficitur lobortis nisi quis, molestie porttitor metus.
-              Pellentesque et neque risus. Aliquam vulputate, mauris vitae
-              tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-              lectus vitae ex.{" "}
-            </p>
-            <p style={{ textAlign: "left", color: "gray" }}>
-              posted 1 minute ago
-            </p>
-          </Grid>
-        </Grid>
-      </Paper> */}
     </div>
     </div>
   );

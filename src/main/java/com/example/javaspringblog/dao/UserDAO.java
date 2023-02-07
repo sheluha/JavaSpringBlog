@@ -19,4 +19,5 @@ public interface UserDAO extends CrudRepository<User,Integer> {
 
     Optional<User> getUserByUserName(String userName);
 
+
 }

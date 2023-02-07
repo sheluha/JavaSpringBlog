@@ -27,6 +27,11 @@ public class UserController {
         userService.saveUser(userRequest);
     }
 
+    @PostMapping("/signin")
+    boolean signIn(){
+        return true;
+    }
+
     @GetMapping("/user/{id}")
     User getUserById(@PathVariable int id){
         return userService.findById(id);

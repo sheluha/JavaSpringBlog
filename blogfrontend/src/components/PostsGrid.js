@@ -10,21 +10,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Post from './post';
 
-
-
-export default function PostGrid() {
-
-    const[token,setToken] = useState('');
-    const[posts,setPosts] = useState([]);
-    const[postHead,setPostHead] = useState('');
-    const[postBody,setPostBody] = useState('');
-
-
-    let base64 = require('base-64');
-    var username = 'user';
-    var password = '465e96a0-04e5-4eda-bd31-b49a404f0568'
-    const session_url = 'http://localhost:8080/posts';
-
     // var config2 = {
     //   method: 'post',
     //   url: 'http://localhost:8080/login',
@@ -42,6 +27,16 @@ export default function PostGrid() {
     //     imageName : ""
     //   }
     // };
+        // let base64 = require('base-64');
+    // var username = 'user';
+    // var password = '465e96a0-04e5-4eda-bd31-b49a404f0568'
+
+
+export default function PostGrid() {
+
+    const[posts,setPosts] = useState([]);
+    const session_url = 'http://localhost:8080/posts';
+
     var config = {
         method: 'get',
         url: session_url,
@@ -50,16 +45,14 @@ export default function PostGrid() {
     useEffect(()=>{
     axios(config)
         .then(function (response) {
-        setPosts(response.data);
+            console.log("Fetched Posts");
+            setPosts(response.data);
         })
         .catch(function (error) {
-        console.log(error);
+            console.log(error);
         });
 
     },[]);
-
-
-    
 
     return (
         <Container sx={{ py: 8 }} maxWidth="lg">
