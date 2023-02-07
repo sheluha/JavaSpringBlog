@@ -15,7 +15,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDAO
-                .findUsersByUserName(username)
+                .getUserByUserName(username)
                 .map(SecurityUser::new)
                 .orElseThrow(()->new UsernameNotFoundException("No such user with name:" + username));
 
