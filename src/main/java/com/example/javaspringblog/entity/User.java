@@ -1,27 +1,24 @@
 package com.example.javaspringblog.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 
 @Table(name = "users")
 @Data
+@Builder
 public class User {
+
     @Id
-    @Column("user_id")
-    int userId;
+    private int userId;
 
-    @Column("user_name")
-    String userName;
+    private String userName;
 
-    @Column("user_password")
-    String userPassword;
+    @JsonIgnore
+    private String userPassword;
 
-    @Column("is_admin")
-    Boolean isAdmin;
-
-    @Column("image_name")
-    String imageName;
+    private String imageName;
 }

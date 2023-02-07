@@ -1,10 +1,13 @@
 package com.example.javaspringblog.controller;
 
+import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.User;
+import com.example.javaspringblog.entity.dto.CreateUserRequest;
 import com.example.javaspringblog.service.ImageService;
 import com.example.javaspringblog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,27 +22,9 @@ public class UserController {
 
     private final ImageService imageService;
 
-    @PostMapping("/user")
-    void saveUser(@RequestBody User user){
-        userService.saveUser(user);
-    }
-
-    @PostMapping("/upload")
-    void uploadImage(@RequestParam("userId") int id, @RequestParam("file") MultipartFile file) throws IOException{
-        imageService.store(file,id);
-
-    }
-
-    @GetMapping("/getUserImage/{id}")
-    Resource getUserImage(@PathVariable int id) throws IOException{
-        User user = userService.findById(id);
-        return imageService.loadAsResource(user.getImageName());
-    }
-
-    @PostMapping("/getId")
-    int getUserId(@RequestBody User user){
-        return userService.findByName(user.getUserName()).getUserId();
-
+    @PostMapping("/newuser")
+    void signUp(@RequestBody CreateUserRequest userRequest){
+        userService.saveUser(userRequest);
     }
 
     @GetMapping("/user/{id}")
@@ -47,4 +32,17 @@ public class UserController {
         return userService.findById(id);
 
     }
+
+    @PostMapping("/upload")
+    void uploadImage(@RequestParam("file") MultipartFile file,@AuthenticationPrincipal SecurityUser user) throws IOException{
+        imageService.store(file, user.getUserId());
+
+    }
+
+    @GetMapping("/getUserImage/{name}")
+    Resource getUserImageByName(@PathVariable String name) throws IOException{
+        User user = userService.findByName(name);
+        return imageService.loadAsResource(user.getImageName());
+    }
+
 }

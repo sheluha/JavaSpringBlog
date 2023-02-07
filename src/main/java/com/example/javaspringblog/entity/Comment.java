@@ -1,27 +1,25 @@
 package com.example.javaspringblog.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 
 @Table("comments")
 @Data
+@Builder
 public class Comment {
     @Id
-    @Column("comment_id")
-    int commentId;
+    private int commentId;
 
-    @Column("post_id")
-    int postId;
+    private int postId;
 
-    @Column("user_id")
-    int userId;
+    @JsonIgnore
+    private int userId;
 
-    @Column("comment_body")
-    String commentBody;
+    private String commentBody;
 
-    @Column("user_name")
-    String userName;
+    private String userName;
 }

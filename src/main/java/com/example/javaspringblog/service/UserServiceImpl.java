@@ -2,10 +2,12 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.dao.UserDAO;
 import com.example.javaspringblog.entity.User;
+import com.example.javaspringblog.entity.dto.CreateUserRequest;
 import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Service
@@ -15,18 +17,20 @@ public class UserServiceImpl implements UserService{
     private final UserDAO userDAO;
 
     @Override
-    public User saveUser(User user) {
-        return userDAO.save(user);
-    }
+    public void saveUser(CreateUserRequest userRequest) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        userRequest.setUserPassword(encoder.encode(userRequest.getUserPassword()));
 
-    @Override
-    public boolean findUser(@RequestBody String userName, String password) {
-        return userDAO.existsByUserNameAndUserPassword(userName,password);
+        User user = User.builder()
+                .userPassword(userRequest.getUserPassword())
+                .userName(userRequest.getUserName())
+                .build();
+        userDAO.save(user);
     }
 
     @Override
     public User findByName(String userName) {
-        return userDAO.findUsersByUserName(userName).orElseThrow(()->
+        return userDAO.getUserByUserName(userName).orElseThrow(()->
                 new NoSuchElementException("No such user with name = " + userName));
     }
 

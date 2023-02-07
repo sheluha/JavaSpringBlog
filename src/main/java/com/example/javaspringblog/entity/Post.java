@@ -1,28 +1,26 @@
 package com.example.javaspringblog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
 @Table(name = "posts")
 @Data
+@Builder
 public class Post {
 
     @Id
-    @Column("post_id")
-    int postId;
+    private int postId;
 
-    @Column("user_id")
-    int userId;
+    @JsonIgnore
+    private int userId;
 
-    @Column("post_header")
-    String postHeader;
+    private String postHeader;
 
-    @Column("post_body")
-    String postBody;
+    private String postBody;
 
-    @Column("user_name")
-    String userName;
+    private String userName;
 }

@@ -1,8 +1,11 @@
 package com.example.javaspringblog.controller;
 
+import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.Post;
+import com.example.javaspringblog.entity.dto.CreatePostRequest;
 import com.example.javaspringblog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,14 +21,13 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    //@AuthenticationPrincipal SecurityUser user
     @PostMapping("/newpost")
-    void savePost(@RequestBody Post post){
-        postService.savePost(post);
+    void createNewPost(@RequestBody CreatePostRequest postRequest, @AuthenticationPrincipal SecurityUser user){
+        postService.savePost(postRequest,user);
     }
 
     @GetMapping("/post/{postId}")
-    Post getPost(@PathVariable int postId){
+    Post getPostById(@PathVariable int postId){
         return postService.getPostById(postId);
     }
 }

@@ -24,7 +24,7 @@ class UserServiceImplIntTest {
     @Mock
     private UserDAO userDAO;
 
-    private static final User user = new User();
+    private static final User user = User.builder().build();
 
     @BeforeAll
     public static void setUp(){
@@ -32,21 +32,14 @@ class UserServiceImplIntTest {
         user.setUserName("test");
         user.setUserPassword("testpsw");
         user.setImageName("");
-        user.setIsAdmin(false);
-    }
-
-    @Test
-    void findUser() {
-        when(userDAO.existsByUserNameAndUserPassword(user.getUserName(),user.getUserPassword())).thenReturn(true);
-        assertTrue(userService.findUser(user.getUserName(),user.getUserPassword()));
     }
 
     @Test
     void findByName() {
-        when(userDAO.findUsersByUserName(user.getUserName())).thenReturn(Optional.of(user));
+        when(userDAO.getUserByUserName(user.getUserName())).thenReturn(Optional.of(user));
         assertNotNull(userService.findByName("test"));
 
-        when(userDAO.findUsersByUserName("")).thenThrow(NoSuchElementException.class);
+        when(userDAO.getUserByUserName("")).thenThrow(NoSuchElementException.class);
         assertThrows(NoSuchElementException.class,()-> userService.findByName(""));
     }
 

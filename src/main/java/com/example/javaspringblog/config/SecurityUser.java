@@ -48,8 +48,8 @@ public class SecurityUser implements UserDetails{
         return true;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return user.getUserId();
     }
 
     @Override
