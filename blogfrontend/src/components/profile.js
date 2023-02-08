@@ -20,23 +20,8 @@ const theme = createTheme();
 
 export default function Profile() {
 
-   const[user,setUser] = useState([]);
    const[fileUp,setFileUp] = useState(null);
    const { id } = useParams();
-
-   var configUser = {
-    method: 'get',
-    url: 'http://localhost:8080/user/'+id,
-    headers: { 'Authorization': localStorage.getItem('token') },  
-  };
-  axios(configUser)
-    .then(function (response) {
-        setUser(response.data);
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,10 +35,10 @@ export default function Profile() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 3 ,width:'150px', height:'150px',border: '0.3px solid black'}} src={"http://localhost:8080/getUserImage/" + id} >
+          <Avatar sx={{ m: 3 ,width:'150px', height:'150px',border: '0.3px solid black'}} src={"http://localhost:8080/getUserImage/" + localStorage.getItem('username')} >
           </Avatar>
           <Typography component="h1" variant="h5">
-            User name : {user.userName}
+            User name : {localStorage.getItem('username')}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
 

@@ -77,8 +77,8 @@ export default function NewPost() {
               label="Post head"
               name="email"
               autoComplete="email"
-              helperText={posthead.length>58 ? "Post head must be < 60 smb" : ''}
-              error = {posthead.length>58}
+              helperText={posthead.length>58|| posthead.length<10? "Must be between 10 and 60 smb" : ''}
+              error = {posthead.length>58|| posthead.length<10}
               autoFocus
               onChange={(val)=>{
                 setpostHead(val.target.value);
@@ -96,8 +96,8 @@ export default function NewPost() {
               multiline
               rows={8}
               color="secondary"
-              error = {postbody.length>200}
-              helperText={postbody.length>200 ? "Post body must be < 200 smb" : ''}
+              error = {postbody.length>200|| postbody.length<10}
+              helperText={postbody.length>200|| postbody.length<10 ? "Must be between 10 and 200 smb" : ''}
               onChange={(val)=>{
                 setpostBody(val.target.value);
             }}

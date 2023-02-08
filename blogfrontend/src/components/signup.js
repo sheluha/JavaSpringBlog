@@ -55,6 +55,29 @@ export default function SignUp() {
       }    
   }
 
+  function passwordValidation(){
+    if(password.includes(' ') || passwordConfirm.includes(' ')){
+      return 'Password must not contain whitespace';
+    }
+    else if(password.length< 5){
+      return 'Password need to be longer than 5';
+    }
+    else if(password != passwordConfirm){
+      return 'Passwords must match';
+    }
+    return '';
+  }
+
+  function usernameValidation(){
+    if(userName.includes(' ')){
+      return 'Username must not contain whitespace';
+    }
+    else if(userName.length< 5){
+      return 'Username need to be longer than 5';
+    }
+    return '';
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -84,6 +107,8 @@ export default function SignUp() {
               name="email"
               autoComplete="email"
               autoFocus
+              error = {usernameValidation()!=''}
+              helperText={usernameValidation()}
               onChange={(val)=>{
                   setUserName(val.target.value);
               }}
@@ -98,6 +123,7 @@ export default function SignUp() {
               type="password"
               id="password2"
               autoComplete="current-password"
+              error = {passwordValidation()!=''}
               onChange={(val)=>{
                 setPassword(val.target.value);
             }}
@@ -112,6 +138,8 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
+              error = {passwordValidation()!=''}
+              helperText={passwordValidation()}
               onChange={(val)=>{
                 setPasswordConfirm(val.target.value);
             }}
@@ -122,7 +150,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => signIn}
+              onClick={() => signIn()}
             >
               Sign Up
             </Button>

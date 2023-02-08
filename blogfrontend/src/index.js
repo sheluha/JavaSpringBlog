@@ -18,9 +18,9 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />  
-        <Route path="/newpost" element={<NewPost />} /> 
+        <Route path="/newpost" element={localStorage.getItem('token') != null ?<NewPost /> : <SignIn />} /> 
         <Route path="/post/:id" element={<Post />} />
-        <Route path="/profile/:id" element={<Profile/>} />
+        <Route path="/profile/:id" element={localStorage.getItem('token') != null ?<Profile/> : <SignIn />} />
           {/* <Route index element={<Home />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="contact" element={<Contact />} />
