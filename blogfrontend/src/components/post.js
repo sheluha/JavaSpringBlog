@@ -122,7 +122,7 @@ function Post() {
       <Paper style={{ padding: "10px 10px" , marginBottom:"5px"}}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
-            <Avatar alt="Remy Sharp" />
+            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + comment.userName}/>
           </Grid>
           <Grid justifyContent="left" item xs zeroMinWidth>
             <h4 style={{ margin: 0, textAlign: "left", fontSize: 20}}>{comment.userName}</h4>
