@@ -22,6 +22,7 @@ public class WebSecurityConfig {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/comments/*","/posts","/newuser","/post/*","/getUserImage/*").permitAll()
+                        .requestMatchers("/users","deleteUser").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
 
                 )

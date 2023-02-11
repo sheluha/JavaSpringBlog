@@ -3,10 +3,12 @@ package com.example.javaspringblog.config;
 import com.example.javaspringblog.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 public class SecurityUser implements UserDetails{
@@ -15,7 +17,7 @@ public class SecurityUser implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override
@@ -28,6 +30,9 @@ public class SecurityUser implements UserDetails{
         return user.getUserName();
     }
 
+    public int getUserId() {
+        return user.getUserId();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -48,9 +53,6 @@ public class SecurityUser implements UserDetails{
         return true;
     }
 
-    public int getUserId() {
-        return user.getUserId();
-    }
 
     @Override
     public String toString() {

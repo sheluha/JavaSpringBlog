@@ -6,6 +6,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
+
 
 @Table(name = "users")
 @Data
@@ -20,5 +22,11 @@ public class User {
     @JsonIgnore
     private String userPassword;
 
+    @JsonIgnore
     private String imageName;
+
+    @JsonIgnore
+    private String role;
+
+    private LocalDate registerDate;
 }

@@ -9,6 +9,7 @@ import SignUp from './components/signup';
 import NewPost from './components/newPost';
 import Post from './components/post';
 import Profile from './components/profile';
+import AdminPage from './components/AdminPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,6 +22,7 @@ root.render(
         <Route path="/newpost" element={localStorage.getItem('token') != null ?<NewPost /> : <SignIn />} /> 
         <Route path="/post/:id" element={<Post />} />
         <Route path="/profile/:id" element={localStorage.getItem('token') != null ?<Profile/> : <SignIn />} />
+        <Route path="/admin" element={localStorage.getItem('token') != null ?<AdminPage/> : <SignIn />} />
           {/* <Route index element={<Home />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="contact" element={<Contact />} />

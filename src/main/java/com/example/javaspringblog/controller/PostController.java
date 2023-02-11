@@ -17,17 +17,17 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    Iterable<Post> showAllPosts(){
+    public Iterable<Post> showAllPosts(){
         return postService.getAllPosts();
     }
 
     @PostMapping("/newpost")
-    void createNewPost(@RequestBody CreatePostRequest postRequest, @AuthenticationPrincipal SecurityUser user){
+    public void createNewPost(@RequestBody CreatePostRequest postRequest, @AuthenticationPrincipal SecurityUser user){
         postService.savePost(postRequest,user);
     }
 
     @GetMapping("/post/{postId}")
-    Post getPostById(@PathVariable int postId){
+    public Post getPostById(@PathVariable int postId){
         return postService.getPostById(postId);
     }
 }

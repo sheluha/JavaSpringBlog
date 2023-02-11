@@ -19,5 +19,8 @@ public interface UserDAO extends CrudRepository<User,Integer> {
 
     Optional<User> getUserByUserName(String userName);
 
+    @Modifying
+    @Query("delete from users where user_id = :id")
+    void deleteUserByUserId(@Param("id") int id);
 
 }

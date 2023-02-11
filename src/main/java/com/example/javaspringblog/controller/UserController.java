@@ -23,31 +23,42 @@ public class UserController {
     private final ImageService imageService;
 
     @PostMapping("/newuser")
-    void signUp(@RequestBody CreateUserRequest userRequest){
+    public void signUp(@RequestBody CreateUserRequest userRequest){
         userService.saveUser(userRequest);
     }
 
     @PostMapping("/signin")
-    boolean signIn(){
+    public boolean signIn(){
         return true;
     }
 
     @GetMapping("/user/{id}")
-    User getUserById(@PathVariable int id){
+    public User getUserById(@PathVariable int id){
         return userService.findById(id);
 
     }
 
+    @GetMapping("/users")
+    public Iterable<User> getAllUsers(){
+        return userService.getAllUsers();
+
+    }
+
     @PostMapping("/upload")
-    void uploadImage(@RequestParam("file") MultipartFile file,@AuthenticationPrincipal SecurityUser user) throws IOException{
+    public void uploadImage(@RequestParam("file") MultipartFile file,@AuthenticationPrincipal SecurityUser user) throws IOException{
         imageService.store(file, user.getUserId());
 
     }
 
     @GetMapping("/getUserImage/{name}")
-    Resource getUserImageByName(@PathVariable String name) throws IOException{
+    public Resource getUserImageByName(@PathVariable String name) throws IOException{
         User user = userService.findByName(name);
         return imageService.loadAsResource(user.getImageName());
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUser(@PathVariable int id){
+        userService.deleteUserById(id);
     }
 
 }

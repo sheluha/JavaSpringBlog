@@ -54,7 +54,7 @@ function Post() {
           console.log(error);
         });
 
-    },[]);
+    },[comments.length]);
 
     function newComment(){
       let config = {
@@ -111,7 +111,7 @@ function Post() {
                 <Button 
                 variant="contained" 
                 sx={{height:46}}
-                onClick={()=>{newComment()}}>
+                onClick={()=>newComment()}>
                     Send
                 </Button>
             </Stack>

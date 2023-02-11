@@ -48,6 +48,7 @@ export default function SignIn() {
               localStorage.setItem('token', token);
               localStorage.setItem('username',userName);
               navigate('/');
+              window.location.reload(false);
             }
           })
           .catch(function (error) {

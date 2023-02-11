@@ -18,11 +18,11 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/comments/{postId}")
-    List<Comment> showAllCommentsOnPost(@PathVariable int postId){
+    public List<Comment> showAllCommentsOnPost(@PathVariable int postId){
         return commentService.getAllByPostId(postId);
     }
     @PostMapping("/newcomment")
-    void saveComment(@RequestBody CreateCommentRequest commentRequest, @AuthenticationPrincipal SecurityUser user){
+    public void saveComment(@RequestBody CreateCommentRequest commentRequest, @AuthenticationPrincipal SecurityUser user){
         commentService.saveComment(commentRequest, user);
     }
 }
