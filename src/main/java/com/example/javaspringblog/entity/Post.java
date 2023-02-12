@@ -6,6 +6,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+
 
 @Table(name = "posts")
 @Data
@@ -23,4 +25,6 @@ public class Post {
     private String postBody;
 
     private String userName;
+
+    private LocalDateTime createdAt;
 }

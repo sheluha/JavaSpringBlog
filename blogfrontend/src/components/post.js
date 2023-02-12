@@ -54,7 +54,7 @@ function Post() {
           console.log(error);
         });
 
-    },[comments.length]);
+    },[]);
 
     function newComment(){
       let config = {
@@ -90,8 +90,11 @@ function Post() {
             <Typography variant="subtitle1" paragraph>
               {post.postBody}
             </Typography>
-            <Typography variant="subtitle1" color='black'>
-              {post.userName}
+            <Typography variant="subtitle1" color='grey'>
+              Post is written by: {post.userName}
+            </Typography>
+            <Typography variant="subtitle1" color='grey'>
+              {typeof post.createdAt === 'string' ? post.createdAt.substring(0,19).replace("T"," ") : "" }
             </Typography>
           </CardContent>
 
@@ -122,10 +125,22 @@ function Post() {
       <Paper style={{ padding: "10px 10px" , marginBottom:"5px"}}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
-            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + comment.userName}/>
+          
+            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + comment.userName}>
+              
+            </Avatar>
           </Grid>
           <Grid justifyContent="left" item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left", fontSize: 20}}>{comment.userName}</h4>
+            <div style={{display:"flex"}}>
+              <Typography variant="subtitle1" color='black'>{comment.userName}</Typography>
+              <Typography variant="title" color="inherit" noWrap>
+                &nbsp;
+                &nbsp;
+              </Typography>
+              <Typography variant="subtitle1" fontSize={3} color='grey' style={{marginTop:7}}>
+                {typeof comment.createdAt === 'string' ? comment.createdAt.substring(0,19).replace("T"," ") : "" }
+                </Typography>
+            </div>
             <p style={{ textAlign: "left", fontSize: 16}}>
               {comment.commentBody}
             </p>

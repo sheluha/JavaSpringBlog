@@ -7,6 +7,7 @@ import com.example.javaspringblog.entity.dto.CreateCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<Comment> getAllByPostId(int postId) {
-        return commentDAO.getAllByPostId(postId);
+        return commentDAO.getAllByPostIdOrderByCreatedAtDesc(postId);
     }
 
     @Override
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService{
                         .postId(commentRequest.getPostId())
                         .userId(user.getUserId())
                         .userName(user.getUsername())
+                        .createdAt(LocalDateTime.now())
                         .build();
         commentDAO.save(comment);
     }

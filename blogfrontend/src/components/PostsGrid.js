@@ -70,7 +70,9 @@ export default function PostGrid() {
                         </CardContent>
                             <CardActions>
                                 <Button size="small" href={'/post/'+ post.postId}>{post.userName}</Button>
+                                <Typography fontSize={3} color='grey' style={{marginLeft:7}}>{post.createdAt.substring(0,10)}</Typography>
                             </CardActions>
+                            
                         </Card>
                     </Grid>
                 ))}

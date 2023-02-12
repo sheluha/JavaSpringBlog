@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CommentDAO extends CrudRepository<Comment,Integer> {
-    List<Comment> getAllByPostId(int postId);
+    List<Comment> getAllByPostIdOrderByCreatedAtDesc(int postId);
 }

@@ -8,6 +8,8 @@ import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Iterable<Post> getAllPosts() {
-        return postDAO.findAll();
+        return postDAO.getAllOrderByCreatedAtDesc();
     }
 
     @Override
@@ -27,6 +29,7 @@ public class PostServiceImpl implements PostService{
                 .postHeader(postRequest.getPostHeader())
                 .userName(user.getUsername())
                 .userId(user.getUserId())
+                .createdAt(LocalDateTime.now())
                 .build();
         postDAO.save(post);
     }

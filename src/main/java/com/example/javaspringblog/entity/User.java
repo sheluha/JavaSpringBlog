@@ -22,7 +22,6 @@ public class User {
     @JsonIgnore
     private String userPassword;
 
-    @JsonIgnore
     private String imageName;
 
     @JsonIgnore
