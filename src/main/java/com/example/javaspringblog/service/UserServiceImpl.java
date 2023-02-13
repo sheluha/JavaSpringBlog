@@ -1,5 +1,6 @@
 package com.example.javaspringblog.service;
 
+import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.dao.UserDAO;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.entity.dto.CreateUserRequest;
@@ -8,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -17,6 +20,8 @@ import java.time.LocalDate;
 public class UserServiceImpl implements UserService{
 
     private final UserDAO userDAO;
+
+    private final ImageService imageService;
 
     @Override
     public void saveUser(CreateUserRequest userRequest) {
@@ -44,21 +49,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUserImageName(int id, String imageName) {
-        userDAO.updateUserImageName(id,imageName);
-    }
-
-    @Override
     public Iterable<User> getAllUsers() {
         return userDAO.findAll();
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteUserById(int id) throws IOException {
         User user= userDAO.findUserByUserId(id).orElseThrow(()-> new NoSuchElementException("No such user with id:" + id));
         if("ADMIN".equals(user.getRole())){
             throw new RuntimeException("You cant delete Admin");
         }
         userDAO.deleteUserByUserId(id);
+        imageService.deleteImage(user.getImageName());
+    }
+
+    @Override
+    public void storeFile(SecurityUser user, MultipartFile file) throws IOException {
+        if(user.getImageName() != null){
+            imageService.deleteImage(user.getImageName());
+        }
+        String fileName = imageService.store(file);
+        userDAO.updateUserImageName(user.getUserId(), fileName);
     }
 }

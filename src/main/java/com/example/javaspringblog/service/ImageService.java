@@ -8,6 +8,8 @@ import java.io.IOException;
 
 @Service
 public interface ImageService {
-    void store(MultipartFile file, int id) throws IOException;
+    String store(MultipartFile file) throws IOException;
     Resource loadAsResource(String filename) throws IOException;
+
+    boolean deleteImage(String filename) throws IOException;
 }

@@ -1,7 +1,11 @@
 package com.example.javaspringblog.service;
 
+import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.entity.dto.CreateUserRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 public interface UserService {
@@ -12,10 +16,10 @@ public interface UserService {
 
     User findById(int id);
 
-    void updateUserImageName(int id, String imageName);
-
     Iterable<User> getAllUsers();
 
-    void deleteUserById(int id);
+    void deleteUserById(int id) throws IOException;
+
+    void storeFile(SecurityUser user, MultipartFile file) throws IOException;
 
 }

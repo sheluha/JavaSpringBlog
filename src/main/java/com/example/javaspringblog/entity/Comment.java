@@ -18,7 +18,6 @@ public class Comment {
 
     private int postId;
 
-    @JsonIgnore
     private int userId;
 
     private String commentBody;

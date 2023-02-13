@@ -76,7 +76,7 @@ export default function Appbar() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             >
-          <Avatar alt="Remy Sharp" 
+          <Avatar 
             src = {"http://localhost:8080/getUserImage/" + localStorage.getItem('username')} 
             sx = {{border: '0.3px solid black'}}/>  
           </Button>} 

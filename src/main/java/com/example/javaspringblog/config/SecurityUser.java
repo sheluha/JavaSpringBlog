@@ -33,6 +33,10 @@ public class SecurityUser implements UserDetails{
     public int getUserId() {
         return user.getUserId();
     }
+
+    public String getImageName(){
+        return user.getImageName();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

@@ -46,8 +46,7 @@ public class UserController {
 
     @PostMapping("/upload")
     public void uploadImage(@RequestParam("file") MultipartFile file,@AuthenticationPrincipal SecurityUser user) throws IOException{
-        imageService.store(file, user.getUserId());
-
+        userService.storeFile(user,file);
     }
 
     @GetMapping("/getUserImage/{name}")
@@ -56,8 +55,16 @@ public class UserController {
         return imageService.loadAsResource(user.getImageName());
     }
 
+
+    @GetMapping("/getImage/{id}")
+    public Resource getUserImageById(@PathVariable int id) throws IOException{
+        User user = userService.findById(id);
+        return imageService.loadAsResource(user.getImageName());
+    }
+
+
     @DeleteMapping("/deleteUser/{id}")
-    public void deleteUser(@PathVariable int id){
+    public void deleteUser(@PathVariable int id) throws IOException {
         userService.deleteUserById(id);
     }
 

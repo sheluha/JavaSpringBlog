@@ -26,6 +26,9 @@ function Post() {
     const[commentBody,setCommentBody] = useState('');
     const { id } = useParams();
 
+   
+
+
     let configPost = {
         method: 'get',
         url: 'http://localhost:8080/post/' + id,
@@ -66,6 +69,7 @@ function Post() {
           commentBody : commentBody,
         }
       }
+
     
       axios(config)
         .then(function (response) {
@@ -122,13 +126,15 @@ function Post() {
     </Grid>
     <div style={{ padding: 10 }} className="App">
     {comments.map((comment) => (
-      <Paper style={{ padding: "10px 10px" , marginBottom:"5px"}}>
+      <Paper style={{ padding: "10px 10px" , marginBottom:"5px"}} key ={comment.commentId}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
           
-            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getUserImage/" + comment.userName}>
+
+            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getImage/" + comment.userId}/>
               
-            </Avatar>
+
+
           </Grid>
           <Grid justifyContent="left" item xs zeroMinWidth>
             <div style={{display:"flex"}}>

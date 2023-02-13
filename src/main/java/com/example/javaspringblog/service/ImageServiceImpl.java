@@ -1,6 +1,7 @@
 package com.example.javaspringblog.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,22 +19,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService{
 
-    private final UserService userService;
-
     private final Path uploadDirectory = Paths.get("userImages");
 
     @Override
-    public void store(MultipartFile file,int id) throws IOException{
+    public String store(MultipartFile file) throws IOException{
 
+        String fileName;
         try(InputStream inputStream = file.getInputStream()){
-            String fileName = UUID.randomUUID() + file.getOriginalFilename();
+            fileName = UUID.randomUUID() + file.getOriginalFilename();
             Path filePath = uploadDirectory.resolve(fileName);
 
+
             Files.copy(inputStream,filePath,StandardCopyOption.REPLACE_EXISTING);
-            userService.updateUserImageName(id,fileName);
         } catch (IOException e){
             throw new IOException("File erroe",e);
         }
+        return fileName;
     }
 
     private Path searchFile;
@@ -50,5 +51,10 @@ public class ImageServiceImpl implements ImageService{
             return new UrlResource(searchFile.toUri());
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteImage(String filename) throws IOException {
+       return Files.deleteIfExists(Path.of("userImages/"+filename));
     }
 }
