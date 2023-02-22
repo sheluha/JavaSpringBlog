@@ -3,6 +3,7 @@ package com.example.javaspringblog.service;
 import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.dao.PostDAO;
 import com.example.javaspringblog.entity.Post;
+import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.entity.dto.CreatePostRequest;
 import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,7 @@ public class PostServiceImpl implements PostService{
         post.setPostHeader(postRequest.getPostHeader());
         post.setPostBody(postRequest.getPostBody());
         post.setCreatedAt(LocalDateTime.now());
-        post.setUserName(user.getUsername());
-        post.setUserId(user.getUserId());
+        post.setUser(user.getUser());
 
         postDAO.save(post);
     }

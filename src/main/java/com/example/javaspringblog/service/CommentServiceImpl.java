@@ -24,11 +24,10 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void saveComment(CreateCommentRequest commentRequest, SecurityUser user) {
         Comment comment = new Comment();
-            comment.setCommentBody(commentRequest.getCommentBody());
             comment.setPostId(commentRequest.getPostId());
-            comment.setUserName(user.getUsername());
+            comment.setCommentBody(commentRequest.getCommentBody());
             comment.setCreatedAt(LocalDateTime.now());
-            comment.setUserId(user.getUserId());
+            comment.setUser(user.getUser());
 
         commentDAO.save(comment);
     }

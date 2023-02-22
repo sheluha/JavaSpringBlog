@@ -54,7 +54,7 @@ export default function PostGrid() {
                             </Typography>
                         </CardContent>
                             <CardActions>
-                                <Button size="small" onClick={()=> redirectToPost(post.postId)}>{post.userName}</Button>
+                                <Button size="small" onClick={()=> redirectToPost(post.postId)}>{post.user.userName}</Button>
                                 <Typography fontSize={3} color='grey' style={{marginLeft:7}}>{post.createdAt.substring(0,10)}</Typography>
                             </CardActions>
                             

@@ -49,19 +49,16 @@ public class UserController {
         userService.storeFile(user,file);
     }
 
+    @GetMapping("/image/{name}")
+    public Resource getImageByName(@PathVariable String name) throws IOException{
+        return imageService.loadAsResource(name);
+    }
+
     @GetMapping("/getUserImage/{name}")
     public Resource getUserImageByName(@PathVariable String name) throws IOException{
         User user = userService.findByName(name);
         return imageService.loadAsResource(user.getImageName());
     }
-
-
-    @GetMapping("/getImage/{id}")
-    public Resource getUserImageById(@PathVariable int id) throws IOException{
-        User user = userService.findById(id);
-        return imageService.loadAsResource(user.getImageName());
-    }
-
 
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@PathVariable int id) throws IOException {

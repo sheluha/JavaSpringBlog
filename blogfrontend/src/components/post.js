@@ -21,7 +21,7 @@ import React from 'react';
 
 function Post() {
 
-    const[post,setPost] = useState('');
+    const[post,setPost] = useState([]);
     const[comments,setComments] = useState([]);
     const[commentBody,setCommentBody] = useState('');
     const { id } = useParams();
@@ -50,7 +50,6 @@ function Post() {
     useEffect(()=>{
       axios(configComment)
         .then(function (response) {
-          console.log('fetched comments');
           setComments(response.data);
         })
         .catch(function (error) {
@@ -95,7 +94,7 @@ function Post() {
               {post.postBody}
             </Typography>
             <Typography variant="subtitle1" color='grey'>
-              Post is written by: {post.userName}
+              Post is written by: {post.user?.userName}
             </Typography>
             <Typography variant="subtitle1" color='grey'>
               {typeof post.createdAt === 'string' ? post.createdAt.substring(0,19).replace("T"," ") : "" }
@@ -129,16 +128,11 @@ function Post() {
       <Paper style={{ padding: "10px 10px" , marginBottom:"5px"}} key ={comment.commentId}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
-          
-
-            <Avatar alt="Remy Sharp" src = {"http://localhost:8080/getImage/" + comment.userId}/>
-              
-
-
+            <Avatar alt="Remy Sharp" src = {comment.user.imageName !=null ? "http://localhost:8080/image/" + comment.user.imageName : undefined}/>
           </Grid>
           <Grid justifyContent="left" item xs zeroMinWidth>
             <div style={{display:"flex"}}>
-              <Typography variant="subtitle1" color='black'>{comment.userName}</Typography>
+              <Typography variant="subtitle1" color='black'>{comment.user.userName}</Typography>
               <Typography variant="title" color="inherit" noWrap>
                 &nbsp;
                 &nbsp;
