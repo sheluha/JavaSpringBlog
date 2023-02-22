@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,13 +23,13 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void saveComment(CreateCommentRequest commentRequest, SecurityUser user) {
-        Comment comment = Comment.builder()
-                        .commentBody(commentRequest.getCommentBody())
-                        .postId(commentRequest.getPostId())
-                        .userId(user.getUserId())
-                        .userName(user.getUsername())
-                        .createdAt(LocalDateTime.now())
-                        .build();
+        Comment comment = new Comment();
+            comment.setCommentBody(commentRequest.getCommentBody());
+            comment.setPostId(commentRequest.getPostId());
+            comment.setUserName(user.getUsername());
+            comment.setCreatedAt(LocalDateTime.now());
+            comment.setUserId(user.getUserId());
+
         commentDAO.save(comment);
     }
 }

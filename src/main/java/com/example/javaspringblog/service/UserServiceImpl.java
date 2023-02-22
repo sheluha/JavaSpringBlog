@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService{
     public void saveUser(CreateUserRequest userRequest) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         userRequest.setUserPassword(encoder.encode(userRequest.getUserPassword()));
-        User user = User.builder()
-                .userPassword(userRequest.getUserPassword())
-                .userName(userRequest.getUserName())
-                .role("USER")
-                .registerDate(LocalDate.now())
-                .build();
+        User user = new User();
+            user.setUserPassword(userRequest.getUserPassword());
+            user.setUserName(userRequest.getUserName());
+            user.setRole("USER");
+            user.setRegisterDate(LocalDate.now());
+
         userDAO.save(user);
     }
 

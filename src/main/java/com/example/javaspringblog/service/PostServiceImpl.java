@@ -19,18 +19,18 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Iterable<Post> getAllPosts() {
-        return postDAO.getAllOrderByCreatedAtDesc();
+        return postDAO.findAll();
     }
 
     @Override
     public void savePost(CreatePostRequest postRequest, SecurityUser user) {
-        Post post = Post.builder()
-                .postBody(postRequest.getPostBody())
-                .postHeader(postRequest.getPostHeader())
-                .userName(user.getUsername())
-                .userId(user.getUserId())
-                .createdAt(LocalDateTime.now())
-                .build();
+        Post post = new Post();
+        post.setPostHeader(postRequest.getPostHeader());
+        post.setPostBody(postRequest.getPostBody());
+        post.setCreatedAt(LocalDateTime.now());
+        post.setUserName(user.getUsername());
+        post.setUserId(user.getUserId());
+
         postDAO.save(post);
     }
 

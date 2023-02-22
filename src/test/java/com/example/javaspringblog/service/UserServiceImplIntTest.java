@@ -24,7 +24,7 @@ class UserServiceImplIntTest {
     @Mock
     private UserDAO userDAO;
 
-    private static final User user = User.builder().build();
+    private static final User user = new User();
 
     @BeforeAll
     public static void setUp(){
