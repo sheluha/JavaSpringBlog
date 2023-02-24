@@ -3,6 +3,7 @@ package com.example.javaspringblog.controller;
 import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.entity.dto.CreateUserRequest;
+import com.example.javaspringblog.entity.mapper.UserMapper;
 import com.example.javaspringblog.service.ImageService;
 import com.example.javaspringblog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping("/newuser")
     public void signUp(@RequestBody CreateUserRequest userRequest){
-        userService.saveUser(userRequest);
+        userService.saveUser(UserMapper.fromCreateRequest(userRequest));
     }
 
     @PostMapping("/signin")
@@ -54,9 +55,9 @@ public class UserController {
         return imageService.loadAsResource(name);
     }
 
-    @GetMapping("/getUserImage/{name}")
-    public Resource getUserImageByName(@PathVariable String name) throws IOException{
-        User user = userService.findByName(name);
+    @GetMapping("/getUserImage/{username}")
+    public Resource getUserImageByName(@PathVariable String username) throws IOException{
+        User user = userService.findByName(username);
         return imageService.loadAsResource(user.getImageName());
     }
 

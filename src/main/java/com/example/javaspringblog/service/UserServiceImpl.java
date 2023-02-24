@@ -3,7 +3,6 @@ package com.example.javaspringblog.service;
 import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.dao.UserDAO;
 import com.example.javaspringblog.entity.User;
-import com.example.javaspringblog.entity.dto.CreateUserRequest;
 import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 
 @Service
@@ -24,15 +22,9 @@ public class UserServiceImpl implements UserService{
     private final ImageService imageService;
 
     @Override
-    public void saveUser(CreateUserRequest userRequest) {
+    public void saveUser(User user) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
-        userRequest.setUserPassword(encoder.encode(userRequest.getUserPassword()));
-        User user = new User();
-            user.setUserPassword(userRequest.getUserPassword());
-            user.setUserName(userRequest.getUserName());
-            user.setRole("USER");
-            user.setRegisterDate(LocalDate.now());
-
+        user.setUserPassword(encoder.encode(user.getUserPassword()));
         userDAO.save(user);
     }
 

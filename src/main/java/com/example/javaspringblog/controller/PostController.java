@@ -3,6 +3,7 @@ package com.example.javaspringblog.controller;
 import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.Post;
 import com.example.javaspringblog.entity.dto.CreatePostRequest;
+import com.example.javaspringblog.entity.mapper.PostMapper;
 import com.example.javaspringblog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +24,7 @@ public class PostController {
 
     @PostMapping("/newpost")
     public void createNewPost(@RequestBody CreatePostRequest postRequest, @AuthenticationPrincipal SecurityUser user){
-        postService.savePost(postRequest,user);
+        postService.savePost(PostMapper.fromCreateRequest(postRequest,user));
     }
 
     @GetMapping("/post/{postId}")

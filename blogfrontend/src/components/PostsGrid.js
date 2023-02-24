@@ -34,11 +34,6 @@ export default function PostGrid() {
 
     },[]);
 
-    function redirectToPost(id){
-        navigate("/post/" + id)
-        window.location.reload(false);
-    }
-
     return (
         <Container sx={{ py: 8 }} maxWidth="lg">
             <Grid container spacing={4}>
@@ -54,7 +49,7 @@ export default function PostGrid() {
                             </Typography>
                         </CardContent>
                             <CardActions>
-                                <Button size="small" onClick={()=> redirectToPost(post.postId)}>{post.user.userName}</Button>
+                                <Button size="small" href={'/post/'+post.postId}>{post.user.userName}</Button>
                                 <Typography fontSize={3} color='grey' style={{marginLeft:7}}>{post.createdAt.substring(0,10)}</Typography>
                             </CardActions>
                             
