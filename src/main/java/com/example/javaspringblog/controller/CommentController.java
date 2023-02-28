@@ -22,7 +22,7 @@ public class CommentController {
     public List<Comment> showAllCommentsOnPost(@PathVariable int postId){
         return commentService.getAllByPostId(postId);
     }
-    @PostMapping("/newcomment")
+    @PutMapping("/newcomment")
     public void saveComment(@RequestBody CreateCommentRequest commentRequest, @AuthenticationPrincipal SecurityUser user){
         commentService.saveComment(CommentMapper.fromCreateRequest(commentRequest,user));
     }

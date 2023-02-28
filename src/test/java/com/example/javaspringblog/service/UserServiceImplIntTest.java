@@ -10,9 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,25 +33,30 @@ class UserServiceImplIntTest {
         user.setUserId(0);
         user.setUserName("test");
         user.setUserPassword("testpsw");
+        user.setRegisterDate(LocalDate.now());
+        user.setRole("ADMIN");
         user.setImageName("");
     }
 
     @Test
-    void findByName() {
+    void findByNameShouldReturnUserOrThrowException() {
         when(userDAO.getUserByUserName(user.getUserName())).thenReturn(Optional.of(user));
         assertNotNull(userService.findByName("test"));
-
-        when(userDAO.getUserByUserName("")).thenThrow(NoSuchElementException.class);
         assertThrows(NoSuchElementException.class,()-> userService.findByName(""));
     }
 
     @Test
-    void findById() {
+    void findByIdShouldReturnUserOrThrowException() {
         when(userDAO.findUserByUserId(user.getUserId())).thenReturn(Optional.of(user));
         assertNotNull(userService.findById(user.getUserId()));
-
-        when(userDAO.findUserByUserId(user.getUserId())).thenThrow(NoSuchElementException.class);
-        assertThrows(NoSuchElementException.class,()-> userService.findById(user.getUserId()));
+        assertThrows(NoSuchElementException.class,()-> userService.findById(1));
 
     }
+
+    @Test
+    void deleteUserByIdShouldThrowExceptionIfAdmin() {
+        when(userDAO.findUserByUserId(user.getUserId())).thenReturn(Optional.of(user));
+        assertThrows(RuntimeException.class,()->userService.deleteUserById(user.getUserId()));
+    }
+
 }

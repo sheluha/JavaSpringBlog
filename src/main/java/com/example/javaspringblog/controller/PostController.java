@@ -22,7 +22,7 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @PostMapping("/newpost")
+    @PutMapping("/newpost")
     public void createNewPost(@RequestBody CreatePostRequest postRequest, @AuthenticationPrincipal SecurityUser user){
         postService.savePost(PostMapper.fromCreateRequest(postRequest,user));
     }

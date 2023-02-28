@@ -46,8 +46,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUserById(int id) throws IOException {
-        User user= userDAO.findUserByUserId(id).orElseThrow(()-> new NoSuchElementException("No such user with id:" + id));
+    public void deleteUserById(int id) {
+        User user= userDAO.findUserByUserId(id)
+                .orElseThrow(()-> new NoSuchElementException("No such user with id:" + id));
         if("ADMIN".equals(user.getRole())){
             throw new RuntimeException("You cant delete Admin");
         }
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void storeFile(SecurityUser user, MultipartFile file) throws IOException {
+    public void storeFile(SecurityUser user, MultipartFile file){
         if(user.getImageName() != null){
             imageService.deleteImage(user.getImageName());
         }
