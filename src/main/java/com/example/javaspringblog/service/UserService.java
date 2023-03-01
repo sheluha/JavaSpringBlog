@@ -17,8 +17,8 @@ public interface UserService {
 
     Iterable<User> getAllUsers();
 
-    void deleteUserById(int id) throws IOException;
+    void deleteUserById(int id);
 
-    void storeFile(SecurityUser user, MultipartFile file) throws IOException;
+    void storeFile(SecurityUser user, MultipartFile file);
 
 }

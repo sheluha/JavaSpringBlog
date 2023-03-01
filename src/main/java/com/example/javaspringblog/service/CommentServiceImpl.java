@@ -2,6 +2,7 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.dao.CommentDAO;
 import com.example.javaspringblog.entity.Comment;
+import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void saveComment(Comment comment) {
-        commentDAO.save(comment);
+    public Comment saveComment(Comment comment) {
+        return commentDAO.save(comment);
+    }
+
+    @Override
+    public void deleteCommentById(int commentId) {
+        commentDAO.deleteById(commentId);
+    }
+
+    @Override
+    public Comment getCommentById(int commentId) {
+        return commentDAO.findById(commentId).orElseThrow(() ->
+                new NoSuchElementException("No such comment with id = " + commentId));
     }
 }

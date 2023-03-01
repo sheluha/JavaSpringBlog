@@ -28,4 +28,9 @@ public class PostServiceImpl implements PostService{
         return postDAO.findById(postId).orElseThrow(() ->
              new NoSuchElementException("No such post with id = " + postId));
     }
+
+    @Override
+    public void deletePost(int postId) {
+        postDAO.deleteById(postId);
+    }
 }

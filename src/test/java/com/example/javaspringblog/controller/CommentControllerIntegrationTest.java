@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,7 +34,7 @@ class CommentControllerIntegrationTest {
         commentRequest.setCommentBody("Test comment body");
         commentRequest.setPostId(42);
 
-        mvc.perform(put("/newcomment")
+        mvc.perform(post("/comment")
                 .with(httpBasic("someuser2","somepassword2"))
                 .content(objectMapper.writeValueAsString(commentRequest))
                 .contentType("application/json")

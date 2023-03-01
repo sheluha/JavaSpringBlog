@@ -10,4 +10,6 @@ public interface PostService {
     void savePost(Post post);
 
     Post getPostById(int postId);
+
+    void deletePost(int postId);
 }

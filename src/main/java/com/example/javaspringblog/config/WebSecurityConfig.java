@@ -21,7 +21,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/comments/*","/posts","/newuser","/post/*","/image/*","/getUserImage/*").permitAll()
+                        .requestMatchers("/comments/*","/posts","/user","/post/*","/image/*","/getUserImage/*").permitAll()
                         .requestMatchers("/users","deleteUser").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
 

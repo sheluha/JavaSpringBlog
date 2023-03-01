@@ -28,10 +28,10 @@ export default function NewPost() {
     const data = new FormData(event.currentTarget);
   };
 
-  function newpost(){
+  const newpost = () => {
     let config = {
       method: 'post',
-      url: 'http://localhost:8080/newpost',
+      url: 'http://localhost:8080/post',
       headers: { 'Authorization': localStorage.getItem('token') },
       data: {
         postHeader : posthead,

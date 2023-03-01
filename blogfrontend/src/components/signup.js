@@ -31,11 +31,11 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
   };
 
-  function signIn() {
+  const signIn = () => {
       if(password==passwordConfirm){
           let config = {
               method: 'post',
-              url: 'http://localhost:8080/newuser',
+              url: 'http://localhost:8080/user',
               data: {
                 userName : userName,
                 userPassword : password
@@ -43,7 +43,7 @@ export default function SignUp() {
             };
             axios(config)
                 .then(function (response) {
-                  if(response.status == 200){
+                  if(response.status == 201){
                     localStorage.setItem('token', 'Basic ' +  base64.encode(userName + ":" + password));
                     localStorage.setItem('username',userName);
                     navigate('/');
@@ -55,7 +55,7 @@ export default function SignUp() {
       }    
   }
 
-  function passwordValidation(){
+  const passwordValidation = () => {
     if(password.includes(' ') || passwordConfirm.includes(' ')){
       return 'Password must not contain whitespace';
     }
@@ -68,7 +68,7 @@ export default function SignUp() {
     return '';
   }
 
-  function usernameValidation(){
+  const usernameValidation = () => {
     if(userName.includes(' ')){
       return 'Username must not contain whitespace';
     }
