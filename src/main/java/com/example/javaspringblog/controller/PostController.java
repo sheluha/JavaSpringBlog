@@ -39,8 +39,8 @@ public class PostController {
     //Нужно ли вынести в сервис слой?
     @DeleteMapping("/post/{postId}")
     public ResponseEntity<Integer> deletePost(@PathVariable int postId, @AuthenticationPrincipal SecurityUser user){
-        User userForPost = postService.getPostById(postId).getUser();
-        if(userForPost.getUserId() == user.getUserId() || "ADMIN".equals(user.getUser().getRole())){
+        User authorOfPost = postService.getPostById(postId).getUser();
+        if(authorOfPost.getUserId() == user.getUserId() || "ADMIN".equals(user.getUser().getRole())){
             postService.deletePost(postId);
             return new ResponseEntity<>(postId,HttpStatus.OK);
         }
