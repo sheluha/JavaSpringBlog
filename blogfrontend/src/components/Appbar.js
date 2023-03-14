@@ -90,8 +90,8 @@ export default function Appbar() {
             onClose={handleClose}
             TransitionComponent={Fade}
           >
-            <MenuItem onClick={()=>navigate("/profile/1")} >Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={()=>navigate("/profile/1")} >Picture</MenuItem>
+            <MenuItem onClick={()=>navigate('/account')}>My account</MenuItem>
             <MenuItem onClick={()=>logOut()}>Logout</MenuItem>
             </Menu>       
         </Toolbar>

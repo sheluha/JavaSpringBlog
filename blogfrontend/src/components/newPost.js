@@ -43,7 +43,7 @@ export default function NewPost() {
     // })
     axios(config)
         .catch(function (error) {
-        console.log(error);
+          console.log(error);
         });
         navigate('/');
         window.location.reload(false);
@@ -77,8 +77,8 @@ export default function NewPost() {
               label="Post head"
               name="email"
               autoComplete="email"
-              helperText={posthead.length>58|| posthead.length<10? "Must be between 10 and 60 smb" : ''}
-              error = {posthead.length>58|| posthead.length<10}
+              helperText={(posthead.length>58 || posthead.length<10) ? "Must be between 10 and 60 smb" : ''}
+              error = {posthead.length>58 || posthead.length<10}
               autoFocus
               onChange={(val)=>{
                 setpostHead(val.target.value);
@@ -96,14 +96,14 @@ export default function NewPost() {
               multiline
               rows={8}
               color="secondary"
-              error = {postbody.length>200|| postbody.length<10}
-              helperText={postbody.length>200|| postbody.length<10 ? "Must be between 10 and 200 smb" : ''}
+              error = {postbody.length<10}
+              helperText={postbody.length<10 ? "Must be between >10 smb" : ''}
               onChange={(val)=>{
                 setpostBody(val.target.value);
             }}
             />
             <Button
-            error = {posthead.length>58 || postbody > 200}
+            
             color="secondary"
               type="submit"
               fullWidth

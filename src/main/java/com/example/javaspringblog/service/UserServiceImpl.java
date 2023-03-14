@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService{
         String fileName = imageService.store(file);
         userDAO.updateUserImageName(user.getUserId(), fileName);
     }
+
+    @Override
+    public void updateUserName(int id, String name) {
+        userDAO.updateUserName(id,name);
+    }
+
+    @Override
+    public void updateUserPassword(int id, String password) {
+        userDAO.updateUserPassword(id,password);
+    }
 }

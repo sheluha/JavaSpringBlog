@@ -21,4 +21,8 @@ public interface UserService {
 
     void storeFile(SecurityUser user, MultipartFile file);
 
+    void updateUserName(int id, String name);
+
+    void updateUserPassword(int id, String password);
+
 }

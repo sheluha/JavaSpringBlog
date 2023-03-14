@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState , useEffect} from 'react';
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 
 const theme = createTheme();
@@ -22,6 +23,7 @@ export default function Profile() {
 
    const[fileUp,setFileUp] = useState(null);
    const { id } = useParams();
+   const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,10 +64,11 @@ export default function Profile() {
                         
                     }  
                   };
-                  console.log(configFileUpload.data);
                   axios(configFileUpload)
                     .then(function (response) {
-                        console.log("send");
+                      navigate('/');
+                      window.location.reload(false);
+                      console.log("send");
                     })
                     .catch(function (error) {
                         console.log(error);

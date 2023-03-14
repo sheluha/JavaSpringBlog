@@ -12,4 +12,6 @@ public interface CommentService {
     void deleteCommentById(int commentId);
 
     Comment getCommentById(int commentId);
+
+    int countCommentsByPostId(int postId);
 }

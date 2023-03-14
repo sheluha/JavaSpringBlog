@@ -2,8 +2,10 @@ package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.dao.PostDAO;
 import com.example.javaspringblog.entity.Post;
+import com.example.javaspringblog.entity.dto.PostResponse;
 import com.example.javaspringblog.exception.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
@@ -13,9 +15,13 @@ public class PostServiceImpl implements PostService{
 
     private final PostDAO postDAO;
 
+    private final CommentService commentService;
+
     @Override
-    public Iterable<Post> getAllPosts() {
-        return postDAO.findAll();
+    public Iterable<PostResponse> getAllPosts(int pageNum) {
+        return postDAO.findAll(PageRequest.of(pageNum,5))
+                .map((post)->
+                        new PostResponse(post,commentService.countCommentsByPostId(post.getPostId())));
     }
 
     @Override

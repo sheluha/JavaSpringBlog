@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,13 +33,13 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Boolean> signIn(){
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    public ResponseEntity<String> signIn(@AuthenticationPrincipal SecurityUser user){
+        return new ResponseEntity<>(user.getUser().getRole(), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable int id){
-        return userService.findById(id);
+    @GetMapping("/userinfo")
+    public ResponseEntity<User> getUserById(@AuthenticationPrincipal SecurityUser user){
+        return new ResponseEntity<>(user.getUser(),HttpStatus.OK);
     }
 
     @GetMapping("/users")
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/image/{name}")
-    public Resource getImageByName(@PathVariable String name){
+    public Resource getImageByImageName(@PathVariable String name){
         return imageService.loadAsResource(name);
     }
 
@@ -67,6 +68,18 @@ public class UserController {
     public ResponseEntity<Integer> deleteUser(@PathVariable int id){
         userService.deleteUserById(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+    @PutMapping("/user")
+    public ResponseEntity<Integer> updateUserName(@RequestBody CreateUserRequest userRequest, @AuthenticationPrincipal SecurityUser user){
+        if(!userRequest.getUserName().isBlank()){
+            userService.updateUserName(user.getUserId(), userRequest.getUserName());
+        }
+        if(!userRequest.getUserPassword().isBlank()){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String password = encoder.encode(userRequest.getUserPassword());
+            userService.updateUserPassword(user.getUserId(),password);
+        }
+        return new ResponseEntity<>(user.getUserId(),HttpStatus.OK);
     }
 
 }

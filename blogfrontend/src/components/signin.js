@@ -23,10 +23,13 @@ export default function SignIn() {
 
   const[userName,setUserName] = useState('');
   const[password,setPassword] = useState('');
+  const[errorLogin,setErrorLogin] = useState(false);
   const navigate = useNavigate();
 
   let base64 = require('base-64');
 
+
+  const passwordRef = React.useRef(null);
 
 
   const handleSubmit = (event) => {
@@ -34,8 +37,8 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
   };
 
-  function signIn() {
-    var token = 'Basic ' +  base64.encode(userName + ":" + password);
+  const signIn = () => {
+    let token = 'Basic ' +  base64.encode(userName + ":" + password);
 
     let config = {
         method: 'post',
@@ -44,14 +47,21 @@ export default function SignIn() {
       };
       axios(config)
           .then(function (response) {
-            if(response.data){
+            console.log(response.status);
+            if(response.status == 200){
               localStorage.setItem('token', token);
               localStorage.setItem('username',userName);
+              localStorage.setItem('role', response.data);
               navigate('/');
               window.location.reload(false);
             }
           })
           .catch(function (error) {
+            if(error.response.status == 401){
+              //error = {usernameValidation()!=''}
+              //helperText={usernameValidation()}
+              setErrorLogin(true);
+            }
             console.log(error);
           });  
 }
@@ -85,6 +95,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={errorLogin}
               onChange={(val)=>{
                   setUserName(val.target.value);
               }}
@@ -98,6 +109,8 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              error={errorLogin}
+              helperText={errorLogin && 'Incorrect login or password'}
               autoComplete="current-password"
               onChange={(val)=>{
                 setPassword(val.target.value);

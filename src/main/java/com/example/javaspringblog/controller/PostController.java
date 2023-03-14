@@ -4,6 +4,7 @@ import com.example.javaspringblog.config.SecurityUser;
 import com.example.javaspringblog.entity.Post;
 import com.example.javaspringblog.entity.User;
 import com.example.javaspringblog.entity.dto.CreatePostRequest;
+import com.example.javaspringblog.entity.dto.PostResponse;
 import com.example.javaspringblog.entity.mapper.PostMapper;
 import com.example.javaspringblog.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/posts")
-    public Iterable<Post> showAllPosts(){
-        return postService.getAllPosts();
+    @GetMapping("/posts/{page}")
+    public Iterable<PostResponse> showAllPosts(@PathVariable int page){
+        return postService.getAllPosts(page);
     }
 
     @PostMapping("/post")

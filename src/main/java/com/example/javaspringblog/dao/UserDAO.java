@@ -19,6 +19,16 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     @Query("update User u set u.imageName = :imageName where u.userId = :id")
     void updateUserImageName(@Param("id") int id, @Param("imageName") String imageName);
 
+    @Transactional
+    @Modifying
+    @Query("update User u set u.userName = :userName where u.userId = :id")
+    void updateUserName(@Param("id") int id, @Param("userName") String userName);
+
+    @Transactional
+    @Modifying
+    @Query("update User u set u.userPassword = :userPassword where u.userId = :id")
+    void updateUserPassword(@Param("id") int id, @Param("userPassword") String password);
+
     Optional<User> getUserByUserName(String userName);
 
     @Transactional

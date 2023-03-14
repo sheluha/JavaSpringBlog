@@ -34,4 +34,9 @@ public class CommentServiceImpl implements CommentService{
         return commentDAO.findById(commentId).orElseThrow(() ->
                 new NoSuchElementException("No such comment with id = " + commentId));
     }
+
+    @Override
+    public int countCommentsByPostId(int postId) {
+        return commentDAO.countAllByPostId(postId);
+    }
 }

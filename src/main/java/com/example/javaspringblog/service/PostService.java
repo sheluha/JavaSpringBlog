@@ -1,11 +1,12 @@
 package com.example.javaspringblog.service;
 
 import com.example.javaspringblog.entity.Post;
+import com.example.javaspringblog.entity.dto.PostResponse;
 
 
 public interface PostService {
 
-    Iterable<Post> getAllPosts();
+    Iterable<PostResponse> getAllPosts(int pageNum);
 
     void savePost(Post post);
 

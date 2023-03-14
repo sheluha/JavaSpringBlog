@@ -52,7 +52,7 @@ class PostServiceImplTest {
     @Test
     void getAllPostsShouldReturnListOfPosts() {
         when(postDAO.findAll()).thenReturn(List.of(post));
-        assertNotNull(postService.getAllPosts());
+        assertNotNull(postService.getAllPosts(0));
 
     }
 

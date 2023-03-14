@@ -27,7 +27,7 @@ public class User {
     @Column(name = "image_name")
     private String imageName;
 
-    @JsonIgnore
+
     @Column(name = "role")
     private String role;
 

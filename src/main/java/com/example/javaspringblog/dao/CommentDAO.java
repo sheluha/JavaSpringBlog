@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface CommentDAO extends JpaRepository<Comment,Integer> {
     List<Comment> getAllByPostIdOrderByCreatedAtDesc(int postId);
+
+    int countAllByPostId(int postId);
 }

@@ -103,10 +103,10 @@ function Post() {
         <Card sx={{ display: 'flex'}} >
           <CardContent sx={{ flex: 1 }}>
            <div style={{display: 'flex'}}>
-              <Typography component="h2" variant="h5">
+              <Typography component="h2" variant="h5" style={{fontWeight: 'bold'}}>
                 {post.postHeader}
               </Typography>
-              {(localStorage.getItem('username') === post.user?.userName) && 
+              {((localStorage.getItem('username') === post.user?.userName) || (localStorage.getItem('role') === 'ADMIN')) && 
               <Button 
               variant="contained" 
               startIcon={<DeleteIcon />} 
@@ -166,7 +166,7 @@ function Post() {
               <Typography variant="subtitle1" fontSize={3} color='grey' style={{marginTop:7}}>
                 {typeof comment.createdAt === 'string' ? comment.createdAt.substring(0,19).replace("T"," ") : "" }
                 </Typography>
-              {(localStorage.getItem('username') === comment.user?.userName) && <Button 
+              {((localStorage.getItem('username') === comment.user?.userName) || (localStorage.getItem('role') === 'ADMIN')) && <Button 
                variant="contained" 
                startIcon={<DeleteIcon />} 
                size='small'
